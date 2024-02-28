@@ -12,8 +12,7 @@ public class Tree {
     }
 
     // Function to build Expression Tree
-    static Node build(String s)
-    {
+    static Node buildExpressionTree(String expression) {
 
         // Stack to hold nodes
         Stack<Node> stN = new Stack<>();
@@ -29,30 +28,30 @@ public class Tree {
         p['^'] = 3;
         p[')'] = 0;
 
-        for (int i = 0; i < s.length(); i++)
+        for (int i = 0; i < expression.length(); i++)
         {
-            if (s.charAt(i) == '(') {
+            if (expression.charAt(i) == '(') {
 
                 // Push '(' in char stack
-                stC.add(s.charAt(i));
+                stC.add(expression.charAt(i));
             }
 
             // Push the operands in node stack
-            else if (Character.isAlphabetic(s.charAt(i)))
+            else if (Character.isAlphabetic(expression.charAt(i)))
             {
-                t = newNode(s.charAt(i));
+                t = newNode(expression.charAt(i));
                 stN.add(t);
             }
-            else if (p[s.charAt(i)] > 0)
+            else if (p[expression.charAt(i)] > 0)
             {
 
                 // If an operator with lower or
                 // same associativity appears
                 while (
                         !stC.isEmpty() && stC.peek() != '('
-                                && ((s.charAt(i) != '^' && p[stC.peek()] >= p[s.charAt(i)])
-                                || (s.charAt(i) == '^'
-                                && p[stC.peek()] > p[s.charAt(i)])))
+                                && ((expression.charAt(i) != '^' && p[stC.peek()] >= p[expression.charAt(i)])
+                                || (expression.charAt(i) == '^'
+                                && p[stC.peek()] > p[expression.charAt(i)])))
                 {
 
                     // Get and remove the top element
@@ -79,9 +78,9 @@ public class Tree {
                 }
 
                 // Push s[i] to char stack
-                stC.push(s.charAt(i));
+                stC.push(expression.charAt(i));
             }
-            else if (s.charAt(i) == ')') {
+            else if (expression.charAt(i) == ')') {
                 while (!stC.isEmpty() && stC.peek() != '(')
                 {
                     t = newNode(stC.peek());
@@ -101,27 +100,41 @@ public class Tree {
         return t;
     }
 
-        public static void inOrder(Node root){
-        if(root==null) return;
-
-        inOrder(root.left);
-        System.out.print(root.data);
-        inOrder(root.right);
-    }
-
-    public static void preOrder(Node root){
-        if(root==null) return;
-        System.out.print(root.data);
-        preOrder(root.left);
-        preOrder(root.right);
-
-    }
-    static void postorder(Node root) {
-        if (root != null)
-        {
-            postorder(root.left);
-            postorder(root.right);
-            System.out.print(root.data);
+    public static  String inOrder(Node currentNode, String resultString) {
+        if(currentNode == null){
+            return resultString;
         }
+
+        resultString = inOrder(currentNode.left, resultString);
+        resultString = resultString + currentNode.data + " ";
+        resultString = inOrder(currentNode.right, resultString);
+        return resultString;
+    }
+
+public static  String postOrder(Node currentNode, String resultString) {
+    if(currentNode == null)
+    {
+        return resultString; // preserve previously calculated value
+    }
+    //Go through left
+    resultString = postOrder(currentNode.left, resultString);
+    //Go through right
+    resultString = postOrder(currentNode.right, resultString);
+    resultString = resultString + currentNode.data + " ";
+    return resultString;
+}
+
+    public static  String preOrder(Node currentNode, String resultString) {
+        if(currentNode == null)
+        {
+            return resultString; // preserve previously calculated value
+        }
+        resultString = resultString + currentNode.data + " ";
+        //Go through left
+        resultString = preOrder(currentNode.left, resultString);
+        //Go through right
+        resultString = preOrder(currentNode.right, resultString);
+
+        return resultString;
     }
 }
