@@ -36,7 +36,7 @@ public class Main {
 //        System.out.println("\nA versao prefixa com numeros é: " + PreFixWithNumbers);
 
 
-            String expression = "((0.5 + 2.0) * 30 )^40";
+            String expression = "(9/3)";
             testTree.ExpressionTree tree;
             tree = new testTree.ExpressionTree();
             tree.constructTree(expression);
@@ -48,5 +48,6 @@ public class Main {
 
         System.out.println("\nPrefix expression from constructed tree:" );
         tree.printPreOrder();
+        tree.evaluate();
     }
 }

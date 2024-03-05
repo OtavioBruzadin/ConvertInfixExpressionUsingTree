@@ -87,6 +87,67 @@ public class testTree {
             return -1;
         }
 
+        private static int toInt(String s)
+        {
+            int num = 0;
+
+            // Check if the integral value is
+            // negative or not
+            // If it is not negative, generate
+            // the number normally
+            if (s.charAt(0) != '-')
+                for(int i = 0; i < s.length(); i++)
+                    num = num * 10 + ((int)s.charAt(i) - 48);
+
+                // If it is negative, calculate the +ve number
+                // first ignoring the sign and invert the
+                // sign at the end
+            else
+            {
+                for(int i = 1; i < s.length(); i++)
+                    num = num * 10 + ((int)(s.charAt(i)) - 48);
+                num = num * -1;
+            }
+            return num;
+        }
+
+        // This function receives a node of the syntax
+// tree and recursively evaluate it
+        public static int evalTree(Node root) {
+
+            // Empty tree
+            if (root == null)
+                return 0;
+
+            // Leaf node i.e, an integer
+            if (root.getLeftSon() == null && root.getRightSon() == null)
+                return toInt(root.getValue());
+
+            // Evaluate left subtree
+            int leftEval = evalTree(root.getLeftSon());
+
+            // Evaluate right subtree
+            int rightEval = evalTree(root.getRightSon());
+
+            // Check which operator to apply
+            if (root.getValue().equals("+"))
+                return leftEval + rightEval;
+
+            if (root.getValue().equals("-"))
+                return leftEval - rightEval;
+
+            if (root.getValue().equals("*"))
+                return leftEval * rightEval;
+
+            if (root.getValue().equals("^"))
+                return (int) Math.pow(leftEval,rightEval);
+
+            if (root.getValue().equals("/"))
+                return leftEval / rightEval;
+
+            return leftEval / rightEval;
+        }
+
         // Method to traverse and print the expression tree in infix order
         private void printInOrder(Node node) {
             if (node != null) {
@@ -140,6 +201,9 @@ public class testTree {
         }
         public void  printPreOrder(){
             System.out.println(preOrder(root,""));
+        }
+        public void evaluate(){
+            System.out.println(evalTree(root));
         }
     }
 }
