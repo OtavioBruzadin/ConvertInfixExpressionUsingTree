@@ -87,65 +87,34 @@ public class testTree {
             return -1;
         }
 
-        private static int toInt(String s)
-        {
-            int num = 0;
+private static double toDouble(String s) {
+    return Double.parseDouble(s);
+}
 
-            // Check if the integral value is
-            // negative or not
-            // If it is not negative, generate
-            // the number normally
-            if (s.charAt(0) != '-')
-                for(int i = 0; i < s.length(); i++)
-                    num = num * 10 + ((int)s.charAt(i) - 48);
-
-                // If it is negative, calculate the +ve number
-                // first ignoring the sign and invert the
-                // sign at the end
-            else
-            {
-                for(int i = 1; i < s.length(); i++)
-                    num = num * 10 + ((int)(s.charAt(i)) - 48);
-                num = num * -1;
-            }
-            return num;
-        }
-
-        // This function receives a node of the syntax
-// tree and recursively evaluate it
-        public static int evalTree(Node root) {
-
-            // Empty tree
+        public static double evalTree(Node root) {
             if (root == null)
                 return 0;
 
-            // Leaf node i.e, an integer
             if (root.getLeftSon() == null && root.getRightSon() == null)
-                return toInt(root.getValue());
+                return toDouble(root.getValue());
 
-            // Evaluate left subtree
-            int leftEval = evalTree(root.getLeftSon());
+            double leftEval = evalTree(root.getLeftSon());
+            double rightEval = evalTree(root.getRightSon());
 
-            // Evaluate right subtree
-            int rightEval = evalTree(root.getRightSon());
-
-            // Check which operator to apply
-            if (root.getValue().equals("+"))
-                return leftEval + rightEval;
-
-            if (root.getValue().equals("-"))
-                return leftEval - rightEval;
-
-            if (root.getValue().equals("*"))
-                return leftEval * rightEval;
-
-            if (root.getValue().equals("^"))
-                return (int) Math.pow(leftEval,rightEval);
-
-            if (root.getValue().equals("/"))
-                return leftEval / rightEval;
-
-            return leftEval / rightEval;
+            switch (root.getValue()) {
+                case "+":
+                    return leftEval + rightEval;
+                case "-":
+                    return leftEval - rightEval;
+                case "*":
+                    return leftEval * rightEval;
+                case "^":
+                    return Math.pow(leftEval, rightEval);
+                case "/":
+                    return leftEval / rightEval;
+                default:
+                    return leftEval / rightEval;
+            }
         }
 
         // Method to traverse and print the expression tree in infix order
