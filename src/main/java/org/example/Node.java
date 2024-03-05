@@ -36,6 +36,8 @@ public class Node {
         return value;
     }
 
+    public float visitar(){return Float.parseFloat(value);}
+
     public Node getLeftSon() {
         return leftSon;
     }

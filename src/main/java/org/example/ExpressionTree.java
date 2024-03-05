@@ -84,15 +84,15 @@ private static double convertToDouble(String s) {
     return Double.parseDouble(s);
 }
 
-        public static double evaluateExpressionTree(Node root) {
+        public static float evaluateExpressionTree(Node root) {
             if (root == null)
                 return 0;
 
             if (root.getLeftSon() == null && root.getRightSon() == null)
-                return convertToDouble(root.getValue());
+                return root.visitar();
 
-            double leftEvaluation = evaluateExpressionTree(root.getLeftSon());
-            double rightEvaluation = evaluateExpressionTree(root.getRightSon());
+            float leftEvaluation = evaluateExpressionTree(root.getLeftSon());
+            float rightEvaluation = evaluateExpressionTree(root.getRightSon());
 
             switch (root.getValue()) {
                 case "+":
@@ -102,7 +102,7 @@ private static double convertToDouble(String s) {
                 case "*":
                     return leftEvaluation * rightEvaluation;
                 case "^":
-                    return Math.pow(leftEvaluation, rightEvaluation);
+                    return (float) Math.pow(leftEvaluation, rightEvaluation);
                 case "/":
                     return leftEvaluation / rightEvaluation;
                 default:
