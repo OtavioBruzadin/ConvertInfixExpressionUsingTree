@@ -2,14 +2,14 @@ package org.example;
 
 public class Node {
 
-    private char value;
+    private String value;
 //    private Node parentNode;
 
     private Node leftSon;
 
     private Node rightSon;
 
-    public Node (char data){
+    public Node (String  data){
         this.value = data;
 //      this.parentNode = parent;
         this.leftSon =null;
@@ -28,11 +28,11 @@ public class Node {
 //        this.parentNode = parentNode;
 //    }
 
-    public void setValue(char value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
-    public char getValue() {
+    public String getValue() {
         return value;
     }
 
