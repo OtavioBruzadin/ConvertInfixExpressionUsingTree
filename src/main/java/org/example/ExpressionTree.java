@@ -167,7 +167,7 @@ private static double convertToDouble(String s) {
 
         }
         public void evaluate(){
-            System.out.println(evaluateExpressionTree(root));
+            System.out.println("O resultado da equação é : "+ evaluateExpressionTree(root));
         }
     }
 
