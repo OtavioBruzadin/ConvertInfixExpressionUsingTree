@@ -11,18 +11,19 @@ public class Main {
             ExpressionTree tree;
             tree = new ExpressionTree();
             Scanner scanner = new Scanner(System.in);
+
             boolean used2option = false;
 
 
             while (section != 5) {
                 System.out.println("Qual seção deseja acessar?: ");
                 section = scanner.nextInt();
-
+                scanner.nextLine();
 
                 if (section == 1) {
                     try {
                         System.out.println("Qual o valor da expressao infixa ?: ");
-                        String infixExpressionInput = scanner.next();
+                        String infixExpressionInput = scanner.nextLine().replaceAll("[\\s\\t]+", "");;
                         infixExpression = infixExpressionInput;
 
                     }catch (Exception Exception){

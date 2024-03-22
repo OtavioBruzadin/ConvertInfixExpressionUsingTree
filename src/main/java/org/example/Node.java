@@ -11,7 +11,7 @@ public class Node {
 
     public Node (String  data){
         this.value = data;
-//      this.parentNode = parent;
+
         this.leftSon =null;
         this.rightSon = null;
     }
@@ -23,10 +23,6 @@ public class Node {
     public void setRightSon(Node rightSon) {
         this.rightSon = rightSon;
     }
-
-//    public void setParentNode(Node parentNode) {
-//        this.parentNode = parentNode;
-//    }
 
     public void setValue(String value) {
         this.value = value;
@@ -41,8 +37,6 @@ public class Node {
     public Node getLeftSon() {
         return leftSon;
     }
-
-
 
     public Node getRightSon() {
         return rightSon;
