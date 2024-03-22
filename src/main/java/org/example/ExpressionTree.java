@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
     public class ExpressionTree {
@@ -10,7 +12,7 @@ import java.util.Stack;
             root = null;
         }
 
-        // Method to construct expression tree from infix expression
+        //Constroi uma  arvore de expressao a partir de uma expressao infixa
         public void createExpressionTree(String expression) {
             Stack<Node> stack = new Stack<>();
             Stack<Character> operatorStack = new Stack<>();
@@ -18,11 +20,11 @@ import java.util.Stack;
             for (int i = 0; i < expression.length(); i++) {
                 char c = expression.charAt(i);
 
-                // Skip whitespaces
+                // ignorar espaços em branco
                 if (c == ' ')
                     continue;
 
-                // If current token is an operand, push it to stack
+                // Se o item atual for um operador adicionamos a stack
                 if (Character.isDigit(c)) {
                     StringBuilder sb = new StringBuilder();
                     while (i < expression.length() && (Character.isDigit(expression.charAt(i)) || expression.charAt(i) == '.')) {
@@ -31,33 +33,33 @@ import java.util.Stack;
                     i--;
                     stack.push(new Node(sb.toString()));
                 }
-                // If current token is an opening brace, push it to operator stack
+                // se o operator for ( adicionamos a stack
                 else if (c == '(')
                     operatorStack.push(c);
 
-                    // If current token is a closing brace, pop operators from stack until matching opening brace is encountered
+                    // Se o token atual for um ) o os operadores serão removidos da pilha até que a chave de ( seja encontrada
                 else if (c == ')') {
                     while (!operatorStack.isEmpty() && operatorStack.peek() != '(')
                         stack.push(popOperator(operatorStack.pop(), stack.pop(), stack.pop()));
                     operatorStack.pop();
                 }
-                // If current token is an operator
+                // se um item atual for um operador
                 else {
-                    while (!operatorStack.isEmpty() && precedence(c) <= precedence(operatorStack.peek()))
+                    while (!operatorStack.isEmpty() && operatorHierarchy(c) <= operatorHierarchy(operatorStack.peek()))
                         stack.push(popOperator(operatorStack.pop(), stack.pop(), stack.pop()));
                     operatorStack.push(c);
                 }
             }
 
-            // Pop remaining operators from operator stack and construct expression tree
+            // Retirar os operadores restantes da pilha e construir a arvore de expressao
             while (!operatorStack.isEmpty())
                 stack.push(popOperator(operatorStack.pop(), stack.pop(), stack.pop()));
 
-            // Root of expression tree is now at the top of stack
+            // coloca a raiz da expressao no topo da stack
             root = stack.pop();
         }
 
-        // Utility method to pop an operator and two operands from stack and construct a node
+        // remove um operador e dois operandos para construir um no
         private Node popOperator(char operator, Node right, Node left) {
             Node node = new Node(Character.toString(operator));
             node.setRightSon(right);
@@ -65,8 +67,8 @@ import java.util.Stack;
             return node;
         }
 
-        // Utility method to get precedence of operators
-        private int precedence(char operator) {
+        // metodo utilizado para definir a hierarquia dos operadores
+        private int operatorHierarchy(char operator) {
             switch (operator) {
                 case '+':
                 case '-':
@@ -83,7 +85,6 @@ import java.util.Stack;
 private static double convertToDouble(String s) {
     return Double.parseDouble(s);
 }
-
         public static float evaluateExpressionTree(Node root) {
             if (root == null)
                 return 0;
@@ -109,7 +110,9 @@ private static double convertToDouble(String s) {
                     return 0;
             }
         }
-
+        private boolean isOperator(String str) {
+            return str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/") || str.equals("^");
+        }
         // Method to traverse and print the expression tree in infix order
         private void printInOrder(Node node) {
             if (node != null) {
@@ -149,21 +152,17 @@ private static double convertToDouble(String s) {
         return resultString;
     }
 
-        // Method to check if a given string is an operator
-        private boolean isOperator(String str) {
-            return str.equals("+") || str.equals("-") || str.equals("*") || str.equals("/") || str.equals("^");
-        }
 
-        // Method to traverse and print the expression tree in infix order (wrapper method)
         public void printInOrder() {
-            System.out.println("\nInfix expression from constructed tree: ");
+            System.out.println("\nExpressao infixa da arvore de expressao: ");
             printInOrder(root);
+
         }
         public void printPostOrder(){
-            System.out.println("\nPostfix expression from constructed tree: "+postOrder(root,""));
+            System.out.println("\nExpressao posfixa da arvore de expressao: \n"+postOrder(root,""));
         }
         public void  printPreOrder(){
-            System.out.println("\nPrefix expression from constructed tree: "+ preOrder(root,""));
+            System.out.println("Expressao prefixa da arvore de expressao: \n"+ preOrder(root,""));
 
         }
         public void evaluate(){
